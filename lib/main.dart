@@ -7,7 +7,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -16,15 +15,14 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      home: const MyHomePage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-  final String title;
+  const MyHomePage({super.key});
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -58,21 +56,24 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 20.0,
-            vertical: 20.0,
-          ),
-          child: Center(
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+              horizontal: 20.0,
+              vertical: 20.0,
+            ),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                ToggleButtons(
-                  isSelected: [_isCelsius, !_isCelsius],
-                  onPressed: _changeMode,
-                  children: const [
-                    Text('°C'),
-                    Text('°F'),
-                  ],
+                Center(
+                  child: ToggleButtons(
+                    isSelected: [_isCelsius, !_isCelsius],
+                    onPressed: _changeMode,
+                    children: const [
+                      Text('°C'),
+                      Text('°F'),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 20.0),
                 TextFormField(
@@ -104,35 +105,30 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: const Text('Convert'),
                 ),
                 const SizedBox(height: 20.0),
-                const Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    Text(
-                      'History',
-                      style: TextStyle(
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.normal,
-                      ),
-                    ),
-                  ],
+                const Text(
+                  'History',
+                  style: TextStyle(
+                    fontSize: 20.0,
+                    fontWeight: FontWeight.normal,
+                  ),
                 ),
                 const SizedBox(height: 20.0),
-                Expanded(
-                  child: ListView.builder(
-                    itemCount: results.length,
-                    itemBuilder: (context, index) {
-                      return Card(
-                        elevation: 1.0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 20.0,
-                            vertical: 10.0,
-                          ),
-                          child: Text(results[index]),
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: results.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      elevation: 1.0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0,
+                          vertical: 10.0,
                         ),
-                      );
-                    },
-                  ),
+                        child: Text(results[index]),
+                      ),
+                    );
+                  },
                 ),
               ],
             ),
