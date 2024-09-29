@@ -48,7 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
     setState(() {
       results.insert(0,
-          "$temperature ${_isCelsius ? '°C' : '°F'} = ${result.toStringAsFixed(2)} ${_isCelsius ? '°F' : '°C'}");
+          "${_isCelsius ? 'C to F' : 'F to C'}: $temperature => ${result.toStringAsFixed(2)}");
     });
   }
 
